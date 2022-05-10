@@ -6,7 +6,7 @@ Vite 2.x + Vue 3.x
 ThumbMenu -> 縮圖導引 + Infinite Scroll  
 PDFRender -> PDF + 放大縮小  
   
-Demo Link : https://sandy0120.github.io/pdf-demo/pdf  
+Demo Link : https://sandy0120.github.io/pdf-demo/  
 
 ## Project setup
 ```
