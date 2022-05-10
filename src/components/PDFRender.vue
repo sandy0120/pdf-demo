@@ -179,6 +179,7 @@ export default {
     }
 
     onMounted(() => {
+      store.commit('app/setLoading', 1)
       loadFile(pdfUrl.value)
     })
 
