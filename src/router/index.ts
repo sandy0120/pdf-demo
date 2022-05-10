@@ -11,13 +11,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'MainLayout',
-    redirect: '/pdf',
     meta: { title: 'MainLayout' },
     component: MainLayout,
     children: [
       {
         name: 'PDF',
-        path: '/pdf',
+        path: '/',
         meta: { title: 'PDF', role: [0, 1, 2] },
         component: PDFViewer
       }
