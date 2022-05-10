@@ -146,16 +146,6 @@ export default {
         }
       })
     }
-    const loadFile = (url: string) => {
-      const loadingTask = PDFJS.getDocument(url)
-      loadingTask.promise.then((pdf: any) => {
-        pdfDoc.value = pdf
-        pdfPages.value = pdf.numPages
-        nextTick(() => {
-          renderPage(1)
-        })
-      })
-    }
 
     const changePage = (num: number) => {
       if (num > 0 && num <= pdfPages.value) {
@@ -176,6 +166,16 @@ export default {
     }
     const downloadPDF = async () => {
       window.location.href = pdfUrl.value
+    }
+    const loadFile = (url: string) => {
+      const loadingTask = PDFJS.getDocument(url)
+      loadingTask.promise.then((pdf: any) => {
+        pdfDoc.value = pdf
+        pdfPages.value = pdf.numPages
+        nextTick(() => {
+          renderPage(1)
+        })
+      })
     }
 
     onMounted(() => {

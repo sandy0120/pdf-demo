@@ -5,12 +5,12 @@
     class="menu-box"
     :style="`transform: translateX(-${isShow ? '0px' : thumbWidth + 'px'})`"
   >
-    <div class="thumb-block" :style="`width: ${thumbWidth}px;`">
+    <div id="scroll" class="thumb-block" :style="`width: ${thumbWidth}px;`">
       <el-row
         type="flex"
         align="middle"
         justify="center"
-        v-for="thumb in pdfPages"
+        v-for="thumb in scrollPage"
         :key="thumb"
       >
         <div>{{ thumb }}</div>
@@ -36,6 +36,7 @@
         <ArrowRightBold />
       </el-icon>
     </el-row>
+    <InfiniteScroll @action="onInfinite" />
   </el-row>
 </template>
 
@@ -43,6 +44,7 @@
 import { useStore } from 'vuex'
 import { ref, computed, onMounted, nextTick, watch } from 'vue'
 import { ArrowLeftBold, ArrowRightBold } from '@element-plus/icons-vue'
+import InfiniteScroll from '@/components/InfiniteScroll.vue'
 import * as PDFJS from 'pdfjs-dist'
 PDFJS.GlobalWorkerOptions.workerSrc =
   'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.js'
@@ -50,7 +52,8 @@ PDFJS.GlobalWorkerOptions.workerSrc =
 export default {
   components: {
     ArrowLeftBold,
-    ArrowRightBold
+    ArrowRightBold,
+    InfiniteScroll
   },
   props: {
     page: {
@@ -65,6 +68,7 @@ export default {
 
     //state
     const pdfPages = ref<number>(0) // 總頁數
+    const scrollPage = ref<number>(5) // Infinite Scroll的最後頁數
     const thumbWidth = computed(() => {
       return store.state.report.thumbWidth
     }) // 縮圖寬度
@@ -79,6 +83,26 @@ export default {
     })
 
     //function
+    const changePage = (num: number) => {
+      if (num > 0 && num <= pdfPages.value) {
+        emit('update:page', num)
+      }
+    }
+    const handlePosition = () => {
+      const thumbBlock: any = document.querySelector('.thumb-block')
+      const pageHight = thumbHeight.value + 16 + 16 //一頁高度
+      const scrollTop = thumbBlock.scrollTop //滾輪位置
+      const distance = props.page * pageHight //目標頁數距離
+      const thumbBlockHeight = thumbBlock.offsetHeight //可見視窗高度
+
+      if (
+        distance - scrollTop > thumbBlockHeight ||
+        distance - scrollTop < pageHight
+      ) {
+        thumbBlock.scrollTop = distance - pageHight
+      }
+    }
+
     const renderThumb = (num: number) => {
       pdfDoc.value.getPage(num).then((page: any) => {
         store.commit('app/setLoading', 1)
@@ -110,14 +134,24 @@ export default {
             viewport: viewport
           }
           page.render(renderContext)
-          if (pdfPages.value > num) {
+          if (scrollPage.value > num) {
             renderThumb(num + 1)
+          } else {
+            store.commit('app/setLoading', 0)
           }
         }
-        if (num > 5) {
-          store.commit('app/setLoading', 0)
-        }
       })
+    }
+    const onInfinite = () => {
+      const all = pdfPages.value
+      if (scrollPage.value < all) {
+        const now = scrollPage.value
+        scrollPage.value += 5
+        if (scrollPage.value >= all) {
+          scrollPage.value = all
+        }
+        renderThumb(now + 1)
+      }
     }
     const loadFile = (url: string) => {
       const loadingTask = PDFJS.getDocument(url)
@@ -129,25 +163,6 @@ export default {
         })
       })
     }
-    const changePage = (num: number) => {
-      if (num > 0 && num <= pdfPages.value) {
-        emit('update:page', num)
-      }
-    }
-    const handlePosition = () => {
-      const thumbBlock: any = document.querySelector('.thumb-block')
-      const pageHight = thumbHeight.value + 16 + 16 //一頁高度
-      const scrollTop = thumbBlock.scrollTop //滾輪位置
-      const distance = props.page * pageHight //目標頁數距離
-      const thumbBlockHeight = thumbBlock.offsetHeight //可見視窗高度
-
-      if (
-        distance - scrollTop > thumbBlockHeight ||
-        distance - scrollTop < pageHight
-      ) {
-        thumbBlock.scrollTop = distance - pageHight
-      }
-    }
 
     watch(() => props.page, handlePosition)
     onMounted(() => {
@@ -157,12 +172,14 @@ export default {
     return {
       isShow,
       pdfPages,
+      scrollPage,
       thumbWidth,
       thumbHeight,
       thumbScale,
       pdfUrl,
       pdfDoc,
-      changePage
+      changePage,
+      onInfinite
     }
   }
 }
