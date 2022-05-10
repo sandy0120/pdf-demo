@@ -1,6 +1,10 @@
-# `Vite 2.x + Vue 3.x ⚡`
+# pdf.js Demo 
+
 ## Project introduce
-實作pdf.js + 縮圖導引 + 放大縮小
+Vite 2.x + Vue 3.x  
+  
+ThumbMenu -> 縮圖導引  
+PDFRender -> PDF + 放大縮小
 
 ## Project setup
 ```
