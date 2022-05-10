@@ -1,0 +1,54 @@
+// global transition css
+
+/* breadcrumb transition */
+.breadcrumb-enter-active,
+.breadcrumb-leave-active,
+.breadcrumb-move {
+  transition: all .5s;
+}
+
+.breadcrumb-enter-from, .breadcrumb-leave-to{
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.breadcrumb-leave-active {
+  position: absolute;
+}
+
+/* fade transition */
+.fade-enter-active{
+  transition: opacity .5s ease;
+}
+.fade-leave-active{
+  transition: opacity .2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* slide-left transition */
+.slide-left-fade-enter-active,
+.slide-left-fade-leave-active {
+  transition: all .8s ease;
+}
+
+.slide-left-fade-enter-from,
+.slide-left-fade-leave-to {
+  transform: translateX(-10vw);
+  opacity: 0;
+}
+
+/* slide-right transition */
+.slide-right-fade-enter-active,
+.slide-right-fade-leave-active {
+  transition: all .8s ease-out;
+}
+
+.slide-right-fade-enter-from,
+.slide-right-fade-leave-to {
+  transform: translateX(10vw);
+  opacity: 0;
+}

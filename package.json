@@ -1,0 +1,53 @@
+{
+  "name": "vite2-vue3-starter",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "dev-product": "vite --mode production",
+    "build": "vite build",
+    "build-development": "vite build --mode development",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^0.2.4",
+    "@types/lodash": "^4.14.165",
+    "axios": "^0.21.0",
+    "caniuse-lite": "^1.0.30001270",
+    "dayjs": "^1.10.7",
+    "dotenv": "^10.0.0",
+    "element-plus": "^1.1.0-beta.16",
+    "hammerjs": "^2.0.8",
+    "js-export-excel": "^1.1.4",
+    "mitt": "^2.1.0",
+    "pdfjs-dist": "^2.10.377",
+    "vue": "^3.2.20",
+    "vue-i18n": "^9.2.0-beta.13",
+    "vue-router": "^4.0.12",
+    "vue-style-loader": "^4.1.3",
+    "vuex": "^4.0.2",
+    "vuex-persistedstate": "^4.0.0-beta.1"
+  },
+  "devDependencies": {
+    "@headlessui/vue": "^1.0.0",
+    "@heroicons/vue": "^1.0.1",
+    "@types/jest": "^24.0.19",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "@vitejs/plugin-vue": "^1.6.2",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.11",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^5.0.2",
+    "autoprefixer": "^10.2.5",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-vue": "^7.20.0",
+    "prettier": "^1.19.1",
+    "sass": "^1.34.1",
+    "sass-loader": "^8.0.2",
+    "typescript": "~3.9.3",
+    "vite": "^2.5.8",
+    "vue-jest": "^5.0.0-0"
+  }
+}
