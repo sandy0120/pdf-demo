@@ -12,6 +12,7 @@ export default defineConfig({
   server: {
     open: true
   },
+  base: '/pdf-demo/',
   build: {
     target: 'modules' // 默认值
   },
